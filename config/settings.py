@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-insecure-key-if-env-is-missi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 't')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -141,10 +141,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all in debug mode, else restrict
-cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS')
-if cors_origins:
-    CORS_ALLOWED_ORIGINS = cors_origins.split(',')
+CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
