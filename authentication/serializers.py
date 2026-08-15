@@ -18,6 +18,12 @@ class ProfileGetSerializer(ModelSerializer):
         model=Profile
         fields=['user', 'name', 'bio', 'created_at']
 
+class ProfileSerializer(ModelSerializer):
+    user=UserGetSerializer(read_only=True)
+    class Meta:
+        model=Profile
+        fields='__all__'
+
 class ProfileUpdateSerializer(ModelSerializer):
     class Meta:
         model=Profile
