@@ -32,6 +32,7 @@ class Move(models.Model):
     game=models.ForeignKey(Game, on_delete=models.CASCADE, related_name='moves_played')
     player=models.CharField(max_length=10, choices=[('PLAYER1', 'PLAYER2'), ('PLAYER2', 'PLAYER2')])
     move=models.CharField(max_length=4, choices=MOVE_CHOICES)
+    played_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.player} played {self.move}"
