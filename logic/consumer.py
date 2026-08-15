@@ -20,13 +20,14 @@ class MoveSocket(AsyncWebsocketConsumer):
         self.game_id = self.scope["url_route"]["kwargs"]["game_id"]
         
         if self.user.is_authenticated:
+            self.profile_id = await self.get_profile_id(self.user)
             self.game = await Game.objects.select_related('player1', 'player2').aget(id=self.game_id)
             # Verify the user is part of the game
-            if self.user.profile.id not in [self.game.player1_id, self.game.player2_id]:
+            if self.profile_id not in [self.game.player1_id, self.game.player2_id]:
                 await self.close()
                 return
 
-            self.player_type = 'PLAYER1' if self.user.profile.id == self.game.player1_id else 'PLAYER2'
+            self.player_type = 'PLAYER1' if self.profile_id == self.game.player1_id else 'PLAYER2'
             
             await self.accept()
             self.game_group = f"game_group_{self.game_id}"
@@ -95,6 +96,10 @@ class MoveSocket(AsyncWebsocketConsumer):
     @sync_to_async
     def get_all_moves(self, game):
         return list(Move.objects.filter(game=game).order_by('played_at'))
+
+    @sync_to_async
+    def get_profile_id(self, user):
+        return user.profile.id
 
     def check_winner(self, moves):
         player1_moves = {m.move for m in moves if m.player == 'PLAYER1'}

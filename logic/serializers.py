@@ -25,4 +25,5 @@ class GameSerializer(ModelSerializer):
 class GameCreateSerializer(ModelSerializer):
     class Meta:
         model = Game
-        fields = ['player2']
+        fields = ['id', 'player2']
+        read_only_fields = ['id']

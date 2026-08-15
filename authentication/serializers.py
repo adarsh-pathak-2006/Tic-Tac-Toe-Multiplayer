@@ -16,7 +16,7 @@ class ProfileGetSerializer(ModelSerializer):
     user=UserGetSerializer(read_only=True)
     class Meta:
         model=Profile
-        fields=['user', 'name', 'bio', 'created_at']
+        fields=['id', 'user', 'name', 'bio', 'created_at']
 
 class ProfileSerializer(ModelSerializer):
     user=UserGetSerializer(read_only=True)

@@ -6,8 +6,10 @@ from authentication.serializers import RegisterSerializer, ProfileSerializer, Pr
 from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.generics import RetrieveDestroyAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class RegisterAPI(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         serial=RegisterSerializer(data=request.data)
         if serial.is_valid():
@@ -26,6 +28,7 @@ class RegisterAPI(APIView):
 
 
 class MyProfileAPI(RetrieveDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     def get_serializer_class(self):
         if self.request.method=='GET':
             return ProfileSerializer
@@ -36,6 +39,7 @@ class MyProfileAPI(RetrieveDestroyAPIView):
 
 
 class ProfileAPI(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class=ProfileSerializer
     queryset=Profile.objects.all()
     
