@@ -30,7 +30,7 @@ class Score(models.Model):
 class Move(models.Model):
     MOVE_CHOICES=[('H1V1','H1V1'), ('H2V1', 'H2V1'), ('H3V1', 'H3V1'), ('H1V2', 'H1V2'), ('H2V2', 'H2V2'), ('H3V2', 'H3V2'), ('H1V3', 'H1V3'), ('H2V3', 'H2V3'), ('H3V3', 'H3V3')]
     game=models.ForeignKey(Game, on_delete=models.CASCADE, related_name='moves_played')
-    player=models.CharField(max_length=10, choices=[('PLAYER1', 'PLAYER2'), ('PLAYER2', 'PLAYER2')])
+    player=models.CharField(max_length=10, choices=[('PLAYER1', 'PLAYER1'), ('PLAYER2', 'PLAYER2')])
     move=models.CharField(max_length=4, choices=MOVE_CHOICES)
     played_at=models.DateTimeField(auto_now_add=True)
 
